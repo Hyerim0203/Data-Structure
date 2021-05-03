@@ -4,72 +4,72 @@
 
 typedef char element;
 typedef struct {
-	element data[CHAR_MAX_SIZE]; // data¸¦ Æ÷ÀÎÅÍ·Î Á¤ÀÇ
+	element data[CHAR_MAX_SIZE]; // dataë¥¼ í¬ì¸í„°ë¡œ ì •ì˜
 	int top;
 } StackType;
 
-// ½ºÅÃ »ı¼º ÇÔ¼ö
+// ìŠ¤íƒ ìƒì„± í•¨ìˆ˜
 void init_stack(StackType* s)
 {
 	s->top = -1;
 }
 
-// °ø¹é »óÅÂ °ËÃâ ÇÔ¼ö
+// ê³µë°± ìƒíƒœ ê²€ì¶œ í•¨ìˆ˜
 int is_empty(StackType* s)
 {
 	return (s->top == -1);
 }
 
-// Æ÷È­ »óÅÂ °ËÃâ ÇÔ¼ö
+// í¬í™” ìƒíƒœ ê²€ì¶œ í•¨ìˆ˜
 int is_full(StackType* s)
 {
 	return (s->top == (CHAR_MAX_SIZE - 1));
 }
 
-// »õ·Î¿î °ª ³Ö±â
+// ìƒˆë¡œìš´ ê°’ ë„£ê¸°
 void push(StackType* s, element item)
 {
 	if (is_full(s)) {
-		fprintf(stderr, "½ºÅÃ Æ÷È­ ¿¡·¯");
+		fprintf(stderr, "ìŠ¤íƒ í¬í™” ì—ëŸ¬");
 	}
-	s->data[++(s->top)] = item; // topÀÇ Å©±â¸¦ 1´Ã¸° ÈÄ °ªÀ» ÂüÁ¶
+	s->data[++(s->top)] = item; // topì˜ í¬ê¸°ë¥¼ 1ëŠ˜ë¦° í›„ ê°’ì„ ì°¸ì¡°
 }
 
-// »èÁ¦ÇÔ¼ö
+// ì‚­ì œí•¨ìˆ˜
 element pop(StackType* s)
 {
 	if (is_empty(s)) {
-		fprintf(stderr, "½ºÅÃ °ø¹é ¿¡·¯\n");
-		exit(1); // °­Á¦Á¾·áÇÏ´Âµ¥ ¿¡·¯°¡ ¹ß»ıÇß´Ù´Â °ÍÀ» ÀüÇÔ 
-		// returnÀº µŞ¹®ÀåÀ» ½ÇÇàÇÏ¸é¼­ Á¾·áÇÏ´Â ¹İ¸é exitÀº ¹Ù·Î Á¾·á
+		fprintf(stderr, "ìŠ¤íƒ ê³µë°± ì—ëŸ¬\n");
+		exit(1); // ê°•ì œì¢…ë£Œí•˜ëŠ”ë° ì—ëŸ¬ê°€ ë°œìƒí–ˆë‹¤ëŠ” ê²ƒì„ ì „í•¨ 
+		// returnì€ ë’·ë¬¸ì¥ì„ ì‹¤í–‰í•˜ë©´ì„œ ì¢…ë£Œí•˜ëŠ” ë°˜ë©´ exitì€ ë°”ë¡œ ì¢…ë£Œ
 	}
-	else return s->data[(s->top)--]; // topÀÇ °ªÀ» ÂüÁ¶ÇÑ ÈÄ, topÀÇ °ªÀ» ÇÑ°³ ÁÙÀÓ
+	else return s->data[(s->top)--]; // topì˜ ê°’ì„ ì°¸ì¡°í•œ í›„, topì˜ ê°’ì„ í•œê°œ ì¤„ì„
 }
 
-// ÇÇÅ©ÇÔ¼ö
+// í”¼í¬í•¨ìˆ˜
 element peek(StackType* s)
 {
 	if (is_empty(s)) {
-		fprintf(stderr, "½ºÅÃ °ø¹é ¿¡·¯");
+		fprintf(stderr, "ìŠ¤íƒ ê³µë°± ì—ëŸ¬");
 		exit(1);
 	}
 	else
 		return s->data[s->top];
 }
 
-// ¿¬»êÀÚÀÇ ¿ì¼±¼øÀ§¸¦ ¹İ¿µÇÏ¿©¾ß ÇÑ´Ù.
+// ì—°ì‚°ìì˜ ìš°ì„ ìˆœìœ„ë¥¼ ë°˜ì˜í•˜ì—¬ì•¼ í•œë‹¤.
 int prec(char op)
 {
 	switch (op) {
-	case '(': case ')': return 0; // °¡Àå ³·Àº ¿ì¼±¼øÀ§
+	case '(': case ')': return 0; // ê°€ì¥ ë‚®ì€ ìš°ì„ ìˆœìœ„
 	case '+': case '-': case '%': return 1;
-	case '*': case '/': return 2; // °¡Àå ³ôÀº ¿ì¼±¼øÀ§
+	case '*': case '/': return 2; // ê°€ì¥ ë†’ì€ ìš°ì„ ìˆœìœ„
 	}
 	return -1;
 }
 
-// ÁßÀ§ Ç¥±â ¼ö½Ä -> ÈÄÀ§ Ç¥±â ¼ö½Ä
-StackType infix_to_postfix(char exp[]) // ¹®ÀÚ¿­À» ¹ŞÀ½
+// ì¤‘ìœ„ í‘œê¸° ìˆ˜ì‹ -> í›„ìœ„ í‘œê¸° ìˆ˜ì‹
+StackType infix_to_postfix(char exp[]) // ë¬¸ìì—´ì„ ë°›ìŒ
 {
 	int i, idx = 0;
 	char ch, top_op;
@@ -77,44 +77,44 @@ StackType infix_to_postfix(char exp[]) // ¹®ÀÚ¿­À» ¹ŞÀ½
 	StackType p_s;
 	StackType s;
 
-	init_stack(&p_s); // ½ºÅÃ ÃÊ±âÈ­
-	init_stack(&s); // ½ºÅÃ ÃÊ±âÈ­
+	init_stack(&p_s); // ìŠ¤íƒ ì´ˆê¸°í™”
+	init_stack(&s); // ìŠ¤íƒ ì´ˆê¸°í™”
 	for (i = 0; i < len; i++)
 	{
 		ch = exp[i];
-		switch (ch) { // ¸¸¾à ¿¬»êÀÚ¶ó¸é
+		switch (ch) { // ë§Œì•½ ì—°ì‚°ìë¼ë©´
 		case '+': case '-': case '*': case '/': case '%':
-			// ½ºÅÃ¿¡ ÀÖ´Â ¿¬»êÀÚÀÇ ¿ì¼±¼øÀ§°¡ ´õ Å©°Å³ª °°À¸¸é Ãâ·Â
+			// ìŠ¤íƒì— ìˆëŠ” ì—°ì‚°ìì˜ ìš°ì„ ìˆœìœ„ê°€ ë” í¬ê±°ë‚˜ ê°™ìœ¼ë©´ ì¶œë ¥
 			while (!is_empty(&s) && (prec(ch)) <= prec(peek(&s)))
 			{	
 				push(&p_s, pop(&s));
 			}
-			push(&s, ch); // ½ºÅÃ¿¡ »õ·Î¿î ¿¬»êÀÚ ½×À½
+			push(&s, ch); // ìŠ¤íƒì— ìƒˆë¡œìš´ ì—°ì‚°ì ìŒ“ìŒ
 			break;
-		case '(': // ¿ŞÂÊ °ıÈ£
-			push(&s, ch); // ¹«Á¶°Ç ½ºÅÃ¿¡ »ğÀÔ
+		case '(': // ì™¼ìª½ ê´„í˜¸
+			push(&s, ch); // ë¬´ì¡°ê±´ ìŠ¤íƒì— ì‚½ì…
 			break;
-		case ')': // ¿À¸¥ÂÊ °ıÈ£
+		case ')': // ì˜¤ë¥¸ìª½ ê´„í˜¸
 			top_op = pop(&s);
-			// ¿ŞÂÊ °ıÈ£¸¦ ¸¸³¯¶§±îÁö Ãâ·Â, ¿ŞÂÊ °ıÈ£µµ »èÁ¦
+			// ì™¼ìª½ ê´„í˜¸ë¥¼ ë§Œë‚ ë•Œê¹Œì§€ ì¶œë ¥, ì™¼ìª½ ê´„í˜¸ë„ ì‚­ì œ
 			while (top_op != '(') {
 				push(&p_s, top_op);
 				top_op = pop(&s);
 			}
 			break;
-		default: // ÇÇ¿¬»êÀÚ
+		default: // í”¼ì—°ì‚°ì
 			push(&p_s, ch);
 			break;
 		}
 	}
-	while (!is_empty(&s)) // ½ºÅÃ¿¡ ³²Àº ¿¬»êÀÚµé Ãâ·Â
+	while (!is_empty(&s)) // ìŠ¤íƒì— ë‚¨ì€ ì—°ì‚°ìë“¤ ì¶œë ¥
 		push(&p_s, pop(&s));
 	p_s.data[(p_s.top)+1] = '\0';
 	printf("%d", p_s.top);
 	return p_s;
 }
 
-// ÈÄÀ§ Ç¥±â ¼ö½Ä °è»ê ÇÔ¼ö
+// í›„ìœ„ í‘œê¸° ìˆ˜ì‹ ê³„ì‚° í•¨ìˆ˜
 int eval(StackType p_s)
 {	
 	int op1, op2, value, i = 0;
@@ -123,11 +123,11 @@ int eval(StackType p_s)
 	char ch;
 	StackType s;
 
-	init_stack(&s); // stack ÃÊ±âÈ­
+	init_stack(&s); // stack ì´ˆê¸°í™”
 	for (i = 0; i < len; i++) {
 		ch = exp[i];
 		if (ch != '+' && ch != '-' && ch != '*' && ch != '/' && ch != '%') {
-			// ÇØ´ç ¹®ÀÚÀÇ ¾Æ½ºÅ°ÄÚµå¸¦ ÁøÂ¥ ¼ıÀÚ°ªÀÇ ¾Æ½ºÅ°ÄÚµå·Î º¯°æ
+			// í•´ë‹¹ ë¬¸ìì˜ ì•„ìŠ¤í‚¤ì½”ë“œë¥¼ ì§„ì§œ ìˆ«ìê°’ì˜ ì•„ìŠ¤í‚¤ì½”ë“œë¡œ ë³€ê²½
 			value = ch - '0';
 			push(&s, value);
 		}
@@ -148,10 +148,10 @@ int eval(StackType p_s)
 int main(void)
 {
 	char* s = "3*(4+5)";
-	printf("ÀÔ·Â : %s \n", s);
+	printf("ì…ë ¥ : %s \n", s);
 	StackType p_s = infix_to_postfix(s);
-	printf("ÈÄÀ§Ç¥½Ã¼ö½Ä : %s\n", p_s.data);
-	printf("°è»ê°á°ú : %d", eval(p_s));
+	printf("í›„ìœ„í‘œì‹œìˆ˜ì‹ : %s\n", p_s.data);
+	printf("ê³„ì‚°ê²°ê³¼ : %d", eval(p_s));
 	return 0;
 }
 
