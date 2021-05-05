@@ -1,40 +1,40 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// ===== ¿øÇüÅ¥ ÄÚµå =====
+// ===== ì›í˜•í ì½”ë“œ =====
 #define MAX_QUEUE_SIZE 5
 typedef int element;
-typedef struct { // Å¥ Å¸ÀÔ
+typedef struct { // í íƒ€ìž…
 	element data[MAX_QUEUE_SIZE];
 	int front, rear;
 } QueueType;
 
-// ¿À·ù ÇÔ¼ö
+// ì˜¤ë¥˜ í•¨ìˆ˜
 void error(char* message)
 {
 	fprintf(stderr, "%sn", message);
 	exit(1);
 }
 
-// Å¥ ÃÊ±âÈ­(¼±¾ð) ÇÔ¼ö
+// í ì´ˆê¸°í™”(ì„ ì–¸) í•¨ìˆ˜
 void init_queue(QueueType* q)
 {
-	q->front = q->rear = 0; // ¿øÇü Å¥¿¡¼­´Â 0ºÎÅÍ ½ÃÀÛ
+	q->front = q->rear = 0; // ì›í˜• íì—ì„œëŠ” 0ë¶€í„° ì‹œìž‘
 }
 
-// °ø¹é »óÅÂ °ËÃâ ÇÔ¼ö
+// ê³µë°± ìƒíƒœ ê²€ì¶œ í•¨ìˆ˜
 int is_empty(QueueType* q)
 {
 	return (q->front == q->rear);
 }
 
-// Æ÷È­ »óÅÂ °ËÃâ ÇÔ¼ö
+// í¬í™” ìƒíƒœ ê²€ì¶œ í•¨ìˆ˜
 int is_full(QueueType* q)
 {
 	return ((q->rear + 1) % MAX_QUEUE_SIZE == q->front);
 }
 
-// ¿øÇüÅ¥ Ãâ·Â ÇÔ¼ö
+// ì›í˜•í ì¶œë ¥ í•¨ìˆ˜
 void display(QueueType* q)
 {
 	printf("QUEUE(front=%d, rear=%d) = ", q->front, q->rear);
@@ -45,38 +45,38 @@ void display(QueueType* q)
 			printf("%d | ", q->data[i]);
 			if (i == q->rear)
 				break;
-		} while (i != q->front); // ÇÑ¹ÙÄû µµ´Â °ÍÀ» ¹æÁö
+		} while (i != q->front); // í•œë°”í€´ ë„ëŠ” ê²ƒì„ ë°©ì§€
 	}
 	printf("\n");
 }
 
-// »ðÀÔ ÇÔ¼ö
+// ì‚½ìž… í•¨ìˆ˜
 void enqueue(QueueType* q, element item)
 {
 	if (is_full(q)) 
-		error("Å¥°¡ Æ÷È­»óÅÂÀÔ´Ï´Ù");
+		error("íê°€ í¬í™”ìƒíƒœìž…ë‹ˆë‹¤");
 	q->rear = (q->rear + 1) % MAX_QUEUE_SIZE;
 	q->data[q->rear] = item;
 }
 
-// »èÁ¦ ÇÔ¼ö
+// ì‚­ì œ í•¨ìˆ˜
 element dequeue(QueueType* q)
 {
 	if (is_empty(q))
-		error("Å¥°¡ °ø¹é»óÅÂÀÔ´Ï´Ù");
+		error("íê°€ ê³µë°±ìƒíƒœìž…ë‹ˆë‹¤");
 	q->front = (q->front + 1) % MAX_QUEUE_SIZE;
 	return q->data[q->front];
 }
 
-// ¸Ç ¾Õ¿¡ ÀÖ´Â ¿ø¼Ò(Á¦ÀÏ ¸ÕÀú »èÁ¦µÉ ¿ø¼Ò) Ãâ·Â
+// ë§¨ ì•žì— ìžˆëŠ” ì›ì†Œ(ì œì¼ ë¨¼ì € ì‚­ì œë  ì›ì†Œ) ì¶œë ¥
 element peek(QueueType* q)
 {
 	if (is_empty(q))
-		error("Å¥°¡ °ø¹é»óÅÂÀÔ´Ï´Ù");
+		error("íê°€ ê³µë°±ìƒíƒœìž…ë‹ˆë‹¤");
 	return (q->data[(q->front + 1) % MAX_QUEUE_SIZE]);
 }
 
-// === ½ÇÇà ===
+// === ì‹¤í–‰ ===
 int main(void) {
 	QueueType q1;
 	QueueType q2;
@@ -97,7 +97,7 @@ int main(void) {
 	printf("-----------------2.--------------------");
 	for (int i = 0; i < 100; i++) {
 		if (i % 4 == 0) printf("\n");
-		printf("[%d¹ø iteration] - ", i+1);
+		printf("[%dë²ˆ iteration] - ", i+1);
 		enqueue(&q2, 103);
 		enqueue(&q2, 1);
 		dequeue(&q2);
