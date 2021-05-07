@@ -4,7 +4,7 @@
 
 void edge_display(int floor_block, int h) {
 	int i;
-	//·çÆ® ³ëµå °³¼ö
+	//ë£¨íŠ¸ ë…¸ë“œ ê°œìˆ˜
 	int node_num = pow(2, (h + 1) / 2) - pow(2, (h - 1) / 2);
 	int print_block = (node_num * 3);
 	int blank_block = (floor_block-print_block)/2;
@@ -23,9 +23,9 @@ void edge_display(int floor_block, int h) {
 
 void node_display(int* tree, int floor_block, int h) {
 	int i;
-	// ÇØ´ç ÃşÀÇ Ãâ·ÂÇÒ Ã¹¹øÂ° ³ëµå
+	// í•´ë‹¹ ì¸µì˜ ì¶œë ¥í•  ì²«ë²ˆì§¸ ë…¸ë“œ
 	int index = pow(2,(h - 1) / 2) - 1;
-	// ÇØ´ç ÃşÀÇ ³ëµå °³¼ö
+	// í•´ë‹¹ ì¸µì˜ ë…¸ë“œ ê°œìˆ˜
 	int node_num = pow(2, (h+1) / 2) - pow(2, (h-1)/2);
 	int node_block = node_num + node_num -1 + (node_num)/2;
 	for (i = 0; i < (floor_block - node_block) / 2; i++)
@@ -41,14 +41,14 @@ void node_display(int* tree, int floor_block, int h) {
 }
 
 void display(int* tree) {
-	// Æ®¸®ÀÇ ³ôÀÌ
+	// íŠ¸ë¦¬ì˜ ë†’ì´
 	int height = log2(MAX_TREE_SIZE + 1);
-	// Ãâ·ÂÇÏ´Â Ãş °³¼ö(edgeÃş Æ÷ÇÔ)
+	// ì¶œë ¥í•˜ëŠ” ì¸µ ê°œìˆ˜(edgeì¸µ í¬í•¨)
 	int full_height = height + (height - 1);
-	// ¸Ç ¹ØÀÇ ºí·° °³¼ö
+	// ë§¨ ë°‘ì˜ ë¸”ëŸ­ ê°œìˆ˜
 	int floor_block = 2 * full_height - 1;
 	
-	// Ãâ·Â
+	// ì¶œë ¥
 	for (int h = 1; h <= full_height; h++) {
 		if (h % 2 == 0)
 			edge_display(floor_block, h);
@@ -62,7 +62,7 @@ int main(void) {
 	int tree[MAX_TREE_SIZE];
 
 	for (int i = 0; i < MAX_TREE_SIZE; i++) {
-		printf("¿ø¼Ò¸¦ ÀÔ·ÂÇÏ¼¼¿ä");
+		printf("ì›ì†Œë¥¼ ì…ë ¥í•˜ì„¸ìš”");
 		scanf("%d", &tree[i]);
 	}
 	
