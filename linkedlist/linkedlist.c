@@ -7,32 +7,32 @@ void error(char* message) {
 
 typedef int element;
 
-// linkedlist ±¸Á¶Ã¼ ¼±¾ğ
+// linkedlist êµ¬ì¡°ì²´ ì„ ì–¸
 typedef struct ListNode {
 	element data;
 	struct ListNode*link;
 } ListNode;
 
-// »ğÀÔ¿¬»ê
+// ì‚½ì…ì—°ì‚°
 void insert_node(ListNode** phead, ListNode* p, ListNode* new_node) {
-	// phead : linkedlistÀÇ head pointer
-	// p : ¼±Çà node
-	// new node : »ğÀÔµÉnode
-	if (*phead == NULL) { // °ø¹é¸®½ºÆ®¶ó¸é
+	// phead : linkedlistì˜ head pointer
+	// p : ì„ í–‰ node
+	// new node : ì‚½ì…ë node
+	if (*phead == NULL) { // ê³µë°±ë¦¬ìŠ¤íŠ¸ë¼ë©´
 		new_node->link = NULL;
 		*phead = new_node;
 	}
-	else if (p == NULL) { // Ã¹¹øÂ° ³ëµå·Î »ğÀÔÇÑ´Ù¸é
+	else if (p == NULL) { // ì²«ë²ˆì§¸ ë…¸ë“œë¡œ ì‚½ì…í•œë‹¤ë©´
 		new_node->link = *phead;
 		*phead = new_node;
 	}
-	else {                // p node ´ÙÀ½¿¡ »ğÀÔ
+	else {                // p node ë‹¤ìŒì— ì‚½ì…
 		new_node->link = p->link;
 		p->link = new_node;
 	}
 }
 
-// »èÁ¦¿¬»ê
+// ì‚­ì œì—°ì‚°
 void remove_node(ListNode** phead, ListNode* p, ListNode* removed) {
 	if (p == NULL)
 		*phead = removed->link;
@@ -51,17 +51,17 @@ void display(ListNode* head) {
 	printf("\n");
 }
 
-// Å½»ö(Æ¯Á¤ÇÑ µ¥ÀÌÅÍ °ªÀ» Ã£´Â ¿¬»ê)
+// íƒìƒ‰(íŠ¹ì •í•œ ë°ì´í„° ê°’ì„ ì°¾ëŠ” ì—°ì‚°)
 ListNode* search(ListNode* head, int x) {
 	ListNode* p = head;
 	while (p != NULL) {
 		if (p->data == x) return p;
 		p = p->link;
 	}
-	return p; // Å½»ö½ÇÆĞÀÏ °æ¿ì NULL ¹İÈ¯
+	return p; // íƒìƒ‰ì‹¤íŒ¨ì¼ ê²½ìš° NULL ë°˜í™˜
 }
 
-// ÇÕº´ ¿¬»ê ÄÚµå
+// í•©ë³‘ ì—°ì‚° ì½”ë“œ
 ListNode* concat(ListNode* head1, ListNode* head2) {
 	ListNode* p;
 	if (head1 == NULL) return head2;
@@ -78,21 +78,21 @@ ListNode* concat(ListNode* head1, ListNode* head2) {
 
 ListNode* reverse(ListNode* head) {
 	ListNode* r;
-	ListNode* p = head; // ¿ª¼øÀ¸·Î ¸¸µé ¸®½ºÆ®
-	ListNode* q = NULL; // ¿ª¼øÀ¸·Î ¸¸µé ³ëµå
+	ListNode* p = head; // ì—­ìˆœìœ¼ë¡œ ë§Œë“¤ ë¦¬ìŠ¤íŠ¸
+	ListNode* q = NULL; // ì—­ìˆœìœ¼ë¡œ ë§Œë“¤ ë…¸ë“œ
 	while (p != NULL) {
-		r = q;          // ¹Ù²Ü link °ªÀ» ÀúÀåÇØ³õÀ½
-		q = p;          // ¿ª¼øÀ¸·Î ¸¸µé ³ëµå º¹»ç
-		q->link = r;    // ÀúÀåÇØ³õÀº link°ª ÇÒ´ç
+		r = q;          // ë°”ê¿€ link ê°’ì„ ì €ì¥í•´ë†“ìŒ
+		q = p;          // ì—­ìˆœìœ¼ë¡œ ë§Œë“¤ ë…¸ë“œ ë³µì‚¬
+		q->link = r;    // ì €ì¥í•´ë†“ì€ linkê°’ í• ë‹¹
 		p = p->link;
 	}
-	return q;           // ¿ª¼øÀ¸·Î µÈ ¸®½ºÆ®ÀÇ Çìµå Æ÷ÀÎÅÍ
+	return q;           // ì—­ìˆœìœ¼ë¡œ ëœ ë¦¬ìŠ¤íŠ¸ì˜ í—¤ë“œ í¬ì¸í„°
 }
 
 // List
 typedef struct {
-	ListNode* head; // Çìµå Æ÷ÀÎÅÍ
-	int length;     // ³ëµåÀÇ °³¼ö
+	ListNode* head; // í—¤ë“œ í¬ì¸í„°
+	int length;     // ë…¸ë“œì˜ ê°œìˆ˜
 } ListType;
 
 void init(ListType* list) {
@@ -100,17 +100,17 @@ void init(ListType* list) {
 	list->head = NULL;
 }
 
-// ºñ¾îÀÖ´ÂÁö¸¦ ¹İÈ¯
+// ë¹„ì–´ìˆëŠ”ì§€ë¥¼ ë°˜í™˜
 int is_empty(ListType* list) {
 	return (list->head == NULL);
 }
 
-// ¸®½ºÆ®ÀÇ Ç×¸ñÀÇ °³¼ö¸¦ ¹İÈ¯
+// ë¦¬ìŠ¤íŠ¸ì˜ í•­ëª©ì˜ ê°œìˆ˜ë¥¼ ë°˜í™˜
 int get_length(ListType* list) {
 	return list->length;
 }
 
-// ¸®½ºÆ® ¾È¿¡¼­ pos À§Ä¡ÀÇ ³ëµå¸¦ ¹İÈ¯
+// ë¦¬ìŠ¤íŠ¸ ì•ˆì—ì„œ pos ìœ„ì¹˜ì˜ ë…¸ë“œë¥¼ ë°˜í™˜
 ListNode* get_node_at(ListType* list, int pos)
 {
 	int i;
@@ -121,29 +121,29 @@ ListNode* get_node_at(ListType* list, int pos)
 	return p;
 }
 
-// ¸®½ºÆ® ¾È¿¡¼­ posÀ§Ä¡ÀÇ µ¥ÀÌÅÍ¸¦ ¹İÈ¯
+// ë¦¬ìŠ¤íŠ¸ ì•ˆì—ì„œ posìœ„ì¹˜ì˜ ë°ì´í„°ë¥¼ ë°˜í™˜
 element get_entry(ListType* list, int pos)
 {
 	ListNode* p;
-	if (pos < 0 || pos >= list->length) error("À§Ä¡ ¿À·ù");
+	if (pos < 0 || pos >= list->length) error("ìœ„ì¹˜ ì˜¤ë¥˜");
 	p = get_node_at(list, pos);
 	return p->data;
 }
 
-// ÁÖ¾îÁø À§Ä¡¿¡ µ¥ÀÌÅÍ¸¦ »ğÀÔ
+// ì£¼ì–´ì§„ ìœ„ì¹˜ì— ë°ì´í„°ë¥¼ ì‚½ì…
 void add(ListType* list, int pos, element data) {
 	ListNode* p;
-	if ((pos >= 0) && (pos <= list->length)) { // < °¡ ¾Æ´Ñ <= ÀÓ¿¡ À¯ÀÇ!
+	if ((pos >= 0) && (pos <= list->length)) { // < ê°€ ì•„ë‹Œ <= ì„ì— ìœ ì˜!
 		ListNode* node = (ListNode*)malloc(sizeof(ListNode));
-		if (node == NULL) error("¸Ş¸ğ¸® ÇÒ´ç¿¡·¯");
+		if (node == NULL) error("ë©”ëª¨ë¦¬ í• ë‹¹ì—ëŸ¬");
 		node->data = data;
-		p = get_node_at(list, pos-1); // Àü ³ëµå¸¦ Ã£¾Æ¾ß ÇÏ±â ¶§¹®¿¡ pos-1
+		p = get_node_at(list, pos-1); // ì „ ë…¸ë“œë¥¼ ì°¾ì•„ì•¼ í•˜ê¸° ë•Œë¬¸ì— pos-1
 		insert_node(&(list->head), p, node);
 		list->length++;
 	}
 }
 
-// ÁÖ¾îÁø À§Ä¡ÀÇ µ¥ÀÌÅÍ¸¦ »èÁ¦
+// ì£¼ì–´ì§„ ìœ„ì¹˜ì˜ ë°ì´í„°ë¥¼ ì‚­ì œ
 void delete(ListType* list, int pos) {
 	ListNode* p;
 	if (pos >= 0 && pos < list->length) {
@@ -161,9 +161,9 @@ int main(void) {
 	int i;
 	init(&list1);
 	for (i = 0; i < 10; i++) {
-		tmp1 = (ListNode*)malloc(sizeof(ListNode)); // Ãß°¡ÇÒ ³ëµå
-		tmp1->data = i + 1;						    // µ¥ÀÌÅÍ »ğÀÔ
-		insert_node(&(head),tmp2,tmp1);       // ³ëµå Ãß°¡
+		tmp1 = (ListNode*)malloc(sizeof(ListNode)); // ì¶”ê°€í•  ë…¸ë“œ
+		tmp1->data = i + 1;						    // ë°ì´í„° ì‚½ì…
+		insert_node(&(head),tmp2,tmp1);       // ë…¸ë“œ ì¶”ê°€
 		tmp2 = tmp1;
 	}
 	display(head);
