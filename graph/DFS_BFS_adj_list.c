@@ -11,13 +11,13 @@ typedef struct {
 	struct GraphNode* link;
 }GraphNode;
 
-// Á¤Á¡µéÀÇ ÁýÇÕÀ» ÀúÀåÇØ³õÀ» ¹è¿­
+// ì •ì ë“¤ì˜ ì§‘í•©ì„ ì €ìž¥í•´ë†“ì„ ë°°ì—´
 typedef struct {
-	int n; // Á¤Á¡ÀÇ °³¼ö
-	GraphNode* adj_list[MAX_VERTICES]; // Á¡Á¡µéÀÇ ¹è¿­
+	int n; // ì •ì ì˜ ê°œìˆ˜
+	GraphNode* adj_list[MAX_VERTICES]; // ì ì ë“¤ì˜ ë°°ì—´
 }GraphType_list;
 
-// ±×·¡ÇÁ ÃÊ±âÈ­
+// ê·¸ëž˜í”„ ì´ˆê¸°í™”
 void init_list(GraphType_list* g) {
 	int v;
 	g->n = 0;
@@ -25,26 +25,26 @@ void init_list(GraphType_list* g) {
 		g->adj_list[v] = NULL;
 }
 
-// Á¤Á¡ »ðÀÔ ¿¬»ê
+// ì •ì  ì‚½ìž… ì—°ì‚°
 void insert_vertex_list(GraphType_list* g) {
 	if (((g->n) + 1) > MAX_VERTICES) {
-		fprintf(stderr, "±×·¡ÇÁ : Á¤Á¡ÀÇ °³¼ö ÃÊ°ú");
+		fprintf(stderr, "ê·¸ëž˜í”„ : ì •ì ì˜ ê°œìˆ˜ ì´ˆê³¼");
 		return;
 	}
 	g->n++;
 }
 
-// °£¼± »ðÀÔ ¿¬»ê, v¸¦ uÀÇ ÀÎÁ¢ ¸®½ºÆ®¿¡ »ðÀÔÇÑ´Ù.
+// ê°„ì„  ì‚½ìž… ì—°ì‚°, vë¥¼ uì˜ ì¸ì ‘ ë¦¬ìŠ¤íŠ¸ì— ì‚½ìž…í•œë‹¤.
 void insert_edge_list(GraphType_list* g, int u, int v) {
 	if (u >= g->n || v >= g->n) {
-		fprintf(stderr, "±×·¡ÇÁ : Á¤Á¡ ¹øÈ£ ¿À·ù");
+		fprintf(stderr, "ê·¸ëž˜í”„ : ì •ì  ë²ˆí˜¸ ì˜¤ë¥˜");
 		return;
 	}
 	GraphNode* node = (GraphNode*)malloc(sizeof(GraphNode));
 	node->vertex = v;
-	// ¿¬°á ¸®½ºÆ®ÀÇ ¸Ç Ã³À½¿¡ ÀÖ´ø ³ëµå¿Í ÀÌ¾îÁÜ
+	// ì—°ê²° ë¦¬ìŠ¤íŠ¸ì˜ ë§¨ ì²˜ìŒì— ìžˆë˜ ë…¸ë“œì™€ ì´ì–´ì¤Œ
 	node->link = g->adj_list[u];
-	// uÀÇ ¿¬°á ¸®½ºÆ®ÀÇ ¸Ç Ã³À½¿¡ »ðÀÔ
+	// uì˜ ì—°ê²° ë¦¬ìŠ¤íŠ¸ì˜ ë§¨ ì²˜ìŒì— ì‚½ìž…
 	g->adj_list[u] = node;
 }
 
@@ -62,7 +62,7 @@ void print_adj_list(GraphType_list* g) {
 void DFS_list(GraphType_list* g, int node) {
 	GraphNode* t = g->adj_list[node];
 	visited_dfs_list[node] = 1;
-	printf("Á¤Á¡ %d -> ", node);
+	printf("ì •ì  %d -> ", node);
 	while (t) {
 		if (!visited_dfs_list[t->vertex])
 			DFS_list(g, t->vertex);
@@ -89,7 +89,7 @@ int is_full(QueueType* q) {
 
 void enqueue(QueueType* q, int item) {
 	if (is_full(q)) {
-		fprintf(stderr, "Å¥ Æ÷È­»óÅÂ\n");
+		fprintf(stderr, "í í¬í™”ìƒíƒœ\n");
 		return;
 	}
 	q->rear = (q->rear + 1) % MAX_VERTICES;
@@ -98,7 +98,7 @@ void enqueue(QueueType* q, int item) {
 
 int dequeue(QueueType* q) {
 	if (is_empty(q)) {
-		fprintf(stderr, "Å¥ °ø¹é»óÅÂ\n");
+		fprintf(stderr, "í ê³µë°±ìƒíƒœ\n");
 		return 0;
 	}
 	q->front = (q->front + 1) % MAX_VERTICES;
@@ -114,7 +114,7 @@ void BFS_list(GraphType_list* g, int node) {
 
 	while (!is_empty(&q)) {
 		node = dequeue(&q);
-		printf("Á¤Á¡ %d -> ", node);
+		printf("ì •ì  %d -> ", node);
 		for (GraphNode* t = g->adj_list[node]; t; t = t->link) {
 			if (!visited_bfs_list[t->vertex]) {
 				enqueue(&q, t->vertex);
@@ -131,7 +131,7 @@ int main(void) {
 	for (int i = 0; i < 5; i++)
 		insert_vertex_list(g);
 
-	// ÀÎÁ¢ ¸®½ºÆ®´Â edge¸¦ ¾ç¹æÇâ ¸ðµÎ·Î ÁöÁ¤ÇØÁÖ¾î¾ß ÇÔ
+	// ì¸ì ‘ ë¦¬ìŠ¤íŠ¸ëŠ” edgeë¥¼ ì–‘ë°©í–¥ ëª¨ë‘ë¡œ ì§€ì •í•´ì£¼ì–´ì•¼ í•¨
 	insert_edge_list(g, 0, 1);
 	insert_edge_list(g, 1, 0);
 	insert_edge_list(g, 0, 2);
@@ -147,7 +147,7 @@ int main(void) {
 	insert_edge_list(g, 3, 4);
 	insert_edge_list(g, 4, 3);
 
-	printf("----------------ÀÎÁ¢¸®½ºÆ® ÀÌ¿ë---------------\n");
+	printf("----------------ì¸ì ‘ë¦¬ìŠ¤íŠ¸ ì´ìš©---------------\n");
 	printf("[  DFS  ]\n");
 	DFS_list(g, 0);
 	printf("\n");
